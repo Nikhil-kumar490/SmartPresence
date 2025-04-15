@@ -4,7 +4,8 @@ var loginContainer = document.getElementById("loginContainer");
 var dashboard = document.getElementById("dashboard");
 var recordsTable = document.getElementById("recordsTable").querySelector("tbody");
 var sideMenu = document.getElementById("sideMenu");
-  var nav_bar = document.getElementById("nav_bar")
+  var nav_bar = document.getElementById("nav_bar");
+  var cut = document.getElementById("cut");
 
   // function login() {
   //     const user = document.getElementById("username").value;
@@ -46,8 +47,18 @@ function markAttendance() {
   document.getElementById("studentName").value = "";
 }
 
+// function toggleMenu() {
+//   sideMenu.classList.toggle("show");
+
+// }
 function toggleMenu() {
-  sideMenu.classList.toggle("show");
+  const sideMenu = document.getElementById('sideMenu');
+  sideMenu.classList.toggle('show');
+}
+
+function closeMenu() {
+  const sideMenu = document.getElementById('sideMenu');
+  sideMenu.classList.remove('show');
 }
 
 function scrollToSection(id) {

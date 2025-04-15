@@ -10,12 +10,118 @@
     }
 
     body {
-      margin: 0;
-      padding: 0;
       font-family: Arial, sans-serif;
       background-color: #f3f4f6;
+      margin: 0;
     }
 
+    /* Navbar Styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #3b82f6;
+      padding: 1rem;
+      color: white;
+      position: relative;
+      z-index: 10;
+    }
+
+    .com_nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .l_nav h3 {
+      text-align: left;
+    }
+
+    .r_nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .r_nav button {
+      border: 0;
+      background: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .r_nav button:hover {
+      background-color: #2563eb;
+    }
+
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-icon div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    /* Sidebar Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #3b5ef6;
+      padding: 2rem 1rem;
+      transition: left 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      z-index: 100;
+    }
+
+    .side-menu button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      text-align: left;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+    }
+
+    .side-menu.show {
+      left: 0;
+    }
+
+    /* Cut Button */
+    #cut {
+      width: 40px;
+      height: 40px;
+      font-size: 40px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #cut:hover {
+      background-color: #3b82f6;
+    }
+
+    /* Form Container */
     .form-container {
       width: 90%;
       max-width: 500px;
@@ -70,23 +176,53 @@
     }
 
     button:hover {
-      background-color: #2563eb;
+      background-color: #3b82f6;
     }
 
     @media (max-width: 600px) {
-      .form-container {
-        padding: 1.5rem;
+      .menu-icon {
+        display: flex;
+      }
+
+      .r_nav {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
 
+  <div class="navbar">
+    <div class="com_nav">
+      <div class="l_nav"><h3>Admin Portal</h3></div>
+      <div class="r_nav">
+        <button>Mark Attendance</button>
+        <button>View Records</button>
+        <button>Scanner</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <div class="side-menu" id="sideMenu">
+    <div id="cut" onclick="closeMenu()">×</div>
+    <button onclick="homepg()">Homepage</button>
+    <button onclick="scrollToSection('attendanceSection')">Mark Attendance</button>
+    <button onclick="scrollToSection('recordsSection')">View Records</button>
+    <button onclick="scrollToSection('Scanner')">Scanner</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
   <div class="form-container">
     <h2>Student Registration</h2>
     <form id="studentForm">
       <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required  placeholder="Enter Your Name"/>
+      <input type="text" id="name" name="name" required placeholder="Enter Your Name"/>
 
       <label for="class">Program</label>
       <select id="class" name="class" required>
@@ -94,7 +230,6 @@
         <option value="B. TECH">B. TECH</option>
         <option value="BCA">BCA</option>
         <option value="BCOM">BCOM</option>
-       
       </select>
 
       <label for="section">Section</label>
@@ -104,7 +239,6 @@
         <option value="B">B</option>
         <option value="C">C</option>
         <option value="D">D</option>
-
       </select>
 
       <label for="enrollment">Enrollment Number</label>
@@ -124,11 +258,32 @@
   </div>
 
   <script>
+    function toggleMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      sideMenu.classList.toggle('show');
+    }
+
+    function closeMenu() {
+      const sideMenu = document.getElementById('sideMenu');
+      sideMenu.classList.remove('show');
+    }
+
     document.getElementById("studentForm").addEventListener("submit", function(e) {
       e.preventDefault();
       alert("Form submitted successfully!");
-      // You can process the form data here or send it to a backend
     });
+
+    function logout() {
+      alert("Logging out...");
+    }
+
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+    function homepg(){
+  window.location.href = "home.html";
+}
   </script>
 
 </body>
