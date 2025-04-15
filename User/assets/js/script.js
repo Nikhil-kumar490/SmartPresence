@@ -6,18 +6,18 @@
   var sideMenu = document.getElementById("sideMenu");
     var nav_bar = document.getElementById("nav_bar")
 
-    function login() {
-        const user = document.getElementById("username").value;
-        const pass = document.getElementById("password").value;
+    // function login() {
+    //     const user = document.getElementById("username").value;
+    //     const pass = document.getElementById("password").value;
       
-        if (user === adminUsername && pass === adminPassword) {
-          loginContainer.classList.add("hidden");
-          dashboard.classList.remove("hidden");
-          document.getElementById("navbarContainer").classList.remove("hidden");
-        } else {
-          alert("Invalid credentials!");
-        }
-      }
+    //     if (user === adminUsername && pass === adminPassword) {
+    //       loginContainer.classList.add("hidden");
+    //       dashboard.classList.remove("hidden");
+    //       // document.getElementById("navbarContainer").classList.remove("hidden");
+    //     } else {
+    //       alert("Invalid credentials!");
+    //     }
+    //   }
       
 
   function logout() {
