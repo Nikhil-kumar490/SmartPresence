@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>User Attendance Portal</title>
-   <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="../css/style.css">
+   <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    
 </head>
 <body>
 
@@ -25,7 +27,11 @@
 </div>
 
 <div class="side-menu" id="sideMenu">
-    <div><img src="assets/image.png" alt="" width="100%"></div>
+    <div><div style="position: relative; width: 128px; height: 128px;">
+      <div id="qrcode"></div>
+      <img src="assets/image.png" id="image"
+           style="position: absolute; top: 50%; left: 50%; width: 32px; height: 32px; transform: translate(-50%, -50%); border-radius: 8px;">
+    </div></div>
   <button onclick="scrollToSection('attendanceSection')">Attendance</button>
   <button onclick="scrollToSection('recordsSection')">View Records</button>
   <button onclick="logout()" class="logout-btn" >Logout</button>
@@ -56,6 +62,22 @@
     </table>
   </section>
 </div>
-<script src="assets/js/script.js"></script>
+<script src="../js/script.js"></script>
+<script>
+  document.getElementById("image").src = "https://arambhsoftech.in/Aman/asset/images/aman.jpeg";
+   const now = new Date();
+const date = now.getDate() + "," + (now.getMonth() + 1) + "," + now.getFullYear();
+const time = now.getHours() + "," + now.getMinutes();
+
+const qrcode = new QRCode(document.getElementById('qrcode'), {
+ text: 'Hello' + "&&" + date + "&&" + time,
+ width: 128,
+ height: 128,
+ colorDark: '#fff',
+ colorLight: '#3b5ef6',
+ correctLevel: QRCode.CorrectLevel.H
+});
+
+</script>
 </body>
 </html>
