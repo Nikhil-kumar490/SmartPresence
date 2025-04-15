@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div style="position: relative; width: 128px; height: 128px;">
+        <div id="qrcode"></div>
+        <img src="assets/image.png" id="image"
+             style="position: absolute; top: 50%; left: 50%; width: 32px; height: 32px; transform: translate(-50%, -50%); border-radius: 8px;">
+      </div>
+      
+</body>
+<script>
+   document.getElementById("image").src = "https://arambhsoftech.in/Aman/asset/images/aman.jpeg";
+    const now = new Date();
+const date = now.getDate() + "," + (now.getMonth() + 1) + "," + now.getFullYear();
+const time = now.getHours() + "," + now.getMinutes();
+
+const qrcode = new QRCode(document.getElementById('qrcode'), {
+  text: 'Hello' + "&&" + date + "&&" + time,
+  width: 128,
+  height: 128,
+  colorDark: '#000',
+  colorLight: '#fff',
+  correctLevel: QRCode.CorrectLevel.H
+});
+
+</script>
+</html>
