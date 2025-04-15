@@ -54,6 +54,6 @@ function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   toggleMenu();
 }
-function location(){
-  window.location = "registration_form.html";
+function locat(){
+  window.location.href = "registration_form.html";
 }
