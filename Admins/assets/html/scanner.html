@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>QR Code Scanner</title>
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
   <style>
     body {
       font-family: sans-serif;
@@ -29,21 +29,19 @@
       const config = { fps: 10, qrbox: 250 };
 
       html5QrCode.start(
-        { facingMode: "environment" },
+        { facingMode: "environment" }, // Rear camera
         config,
         qrCodeMessage => {
           resultElement.innerText = qrCodeMessage;
-          html5QrCode.stop();
+          html5QrCode.stop(); // Stop scanning after successful read
         },
         errorMessage => {
-          // Optional error handling
+          // Optional: console.log(`QR error: ${errorMessage}`);
         }
       ).catch(err => {
-        console.error("Failed to start scanning", err);
-        resultElement.innerText = "Failed to access camera.";
+        console.error("QR scanning failed", err);
       });
     }
   </script>
 </body>
 </html>
- 
