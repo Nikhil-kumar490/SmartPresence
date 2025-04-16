@@ -15,6 +15,7 @@
         <button>Mark Attendence</button>
         <button>View Records</button>
         <button>Scanner</button>
+        <button onclick="locat()">Registration</button>
         <button class="logout-btn" onclick="logout()" >Logout</button>
     </div>
   </div>
@@ -26,6 +27,7 @@
 </div>
 
 <div class="side-menu" id="sideMenu">
+  <div id="cut" onclick="closeMenu()">×</div>
   <button onclick="scrollToSection('attendanceSection')">Mark Attendance</button>
   <button onclick="scrollToSection('recordsSection')">View Records</button>
   <button onclick="scrollToSection('Scanner')">Scanner</button>
@@ -33,31 +35,6 @@
   <button onclick="logout()" class="logout-btn" >Logout</button>
 </div>
 
-<div class="dashboard hidden" id="dashboard">
-  <section id="attendanceSection">
-    <h2>Mark Attendance</h2>
-    <input type="text" id="studentName" placeholder="Enter student name"/>
-    <select id="status">
-      <option value="Present">Present</option>
-      <option value="Absent">Absent</option>
-    </select>
-    <button onclick="markAttendance()">Submit</button>
-  </section>
-
-  <section id="recordsSection">
-    <h3>Attendance Records</h3>
-    <table id="recordsTable">
-      <thead>
-        <tr>
-          <th>Student</th>
-          <th>Status</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
-</div>
 <script src="../js/script.js"></script>
 </body>
 </html>
