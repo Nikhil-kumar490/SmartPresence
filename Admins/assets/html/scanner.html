@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QR Code Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+    #reader {
+      width: 300px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>QR Code Scanner</h2>
+  <button onclick="startScanner()">Start Scanning</button>
+  <div id="reader"></div>
+  <p><strong>Scanned Result:</strong> <span id="result"></span></p>
+
+  <script>
+    function startScanner() {
+      const resultElement = document.getElementById("result");
+
+      const html5QrCode = new Html5Qrcode("reader");
+      const config = { fps: 10, qrbox: 250 };
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        qrCodeMessage => {
+          resultElement.innerText = qrCodeMessage;
+          html5QrCode.stop();
+        },
+        errorMessage => {
+          // Optional error handling
+        }
+      ).catch(err => {
+        console.error("Failed to start scanning", err);
+        resultElement.innerText = "Failed to access camera.";
+      });
+    }
+  </script>
+</body>
+</html>
+ 
