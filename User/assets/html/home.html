@@ -58,20 +58,29 @@
 </div>
 <script src="../js/script.js"></script>
 <script>
+  // Set the profile image
   document.getElementById("image").src = "https://arambhsoftech.in/Aman/asset/images/aman.jpeg";
-   const now = new Date();
-const date = now.getDate() + "," + (now.getMonth() + 1) + "," + now.getFullYear();
-const time = now.getHours() + "," + now.getMinutes();
 
-const qrcode = new QRCode(document.getElementById('qrcode'), {
- text: 'Hello' + "&&" + date + "&&" + time,
- width: 128,
- height: 128,
- colorDark: '#fff',
- colorLight: '#3b5ef6',
- correctLevel: QRCode.CorrectLevel.H
-});
+  // Create a simple QR text string
+  const now = new Date();
+  const date = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`;
+  const time = `${now.getHours()}:${now.getMinutes()}`;
+  const qrText = `Hello | Date: ${date} | Time: ${time}`;
 
+  // Clear the previous QR code if any
+  const qrContainer = document.getElementById("qrcode");
+  qrContainer.innerHTML = "";
+
+  // Generate the QR code
+  const qrcode = new QRCode(qrContainer, {
+    text: qrText,
+    width: 128,
+    height: 128,
+    colorDark: "#000000",      // black
+    colorLight: "#ffffff",     // white
+    correctLevel: QRCode.CorrectLevel.H
+  });
 </script>
+
 </body>
 </html>
