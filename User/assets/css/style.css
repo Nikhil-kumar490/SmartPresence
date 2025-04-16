@@ -120,6 +120,9 @@
       padding: 0.5rem 1rem;
     }
 
+    .side{
+      margin-top: 7rem;
+    }
     .side-menu.show {
       left: 0;
     }
@@ -151,6 +154,7 @@
     button {
       background-color: #3b82f6;
       color: white;
+    
       cursor: pointer;
       transition: background-color 0.3s;
     }

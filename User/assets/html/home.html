@@ -30,15 +30,17 @@
   
     <div class="side-content">
       <!-- QR Code Section -->
-      <div style="position: relative; width: 128px; height: 128px; margin: 0 auto;">
+      <div style="position: relative; width: 30vh; height: 30vh; margin: 0 auto;">
         <div id="qrcode"></div>
         <img src="assets/image.png" id="image"
-             style="position: absolute; top: 50%; left: 50%; width: 32px; height: 32px; transform: translate(-50%, -50%); border-radius: 8px;">
+             style="position: absolute; top: 59%; left: 58%; width: 42px; height: 42px; transform: translate(-50%, -50%); border-radius: 8px;">
       </div>
-
-      <button onclick="scrollToSection('attendanceSection')">Attendance</button>
+<div class="side">
+  <button onclick="scrollToSection('attendanceSection')">Attendance</button>
       <button onclick="scrollToSection('recordsSection')">View Records</button>
       <button onclick="logout()" class="logout-btn">Logout</button>
+</div>
+      
     </div>
   </div>
 
@@ -76,8 +78,8 @@
       // Create new QR code
       new QRCode(qrContainer, {
         text: qrText,
-        width: 128,
-        height: 128,
+        width: 198,
+        height: 198,
         colorDark: "#000000",
         colorLight: "#ffffff",
         correctLevel: QRCode.CorrectLevel.H
