@@ -2,7 +2,6 @@ var adminUsername = "admin";
 var adminPassword = "admin123";
 var loginContainer = document.getElementById("loginContainer");
 var dashboard = document.getElementById("dashboard");
-var recordsTable = document.getElementById("recordsTable").querySelector("tbody");
 var sideMenu = document.getElementById("sideMenu");
   var nav_bar = document.getElementById("nav_bar");
   var cut = document.getElementById("cut");
