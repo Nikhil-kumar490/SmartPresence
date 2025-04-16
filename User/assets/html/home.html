@@ -6,10 +6,9 @@
   <title>User Attendance Portal</title>
    <link rel="stylesheet" href="../css/style.css">
    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
-    
+
 </head>
 <body>
-
     <div class="navbar hidden" id="navbarContainer">
         <div class="com_nav">
     <div class="l_nav"><h3>User Portal</h3></div>
@@ -25,7 +24,6 @@
     <div></div>
   </div>
 </div>
-
 <div class="side-menu" id="sideMenu">
     <div><div style="position: relative; width: 128px; height: 128px;">
       <div id="qrcode"></div>
@@ -36,18 +34,6 @@
   <button onclick="scrollToSection('recordsSection')">View Records</button>
   <button onclick="logout()" class="logout-btn" >Logout</button>
 </div>
-
-<!-- <div class="dashboard hidden" id="dashboard">
-  <section id="attendanceSection">
-    <h2>Mark Attendance</h2>
-    <input type="text" id="studentName" placeholder="Enter student name"/>
-    <select id="status">
-      <option value="Present">Present</option>
-      <option value="Absent">Absent</option>
-    </select>
-    <button onclick="markAttendance()">Submit</button>
-  </section> -->
-
   <section id="recordsSection">
     <h3>Attendance Records</h3>
     <table id="recordsTable">
