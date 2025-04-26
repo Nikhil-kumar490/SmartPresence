@@ -8,19 +8,120 @@
   <style>
     body {
       font-family: sans-serif;
-      padding: 2rem;
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       background-color: #f4f4f9;
     }
 
+    /* Navbar styles */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #3b82f6;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .navbar h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-icon div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #3b82f6;
+      transform: scale(1.1);
+    }
+
+    /* Sidebar Menu */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 70%;
+      height: 100vh;
+      background-color: #3b82f6;
+      color: white;
+      padding: 2rem;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+
+    .side-menu.show {
+      left: 0;
+    }
+
+    .side-menu a {
+      display: block;
+      color: white;
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      text-decoration: none;
+    }
+
+    .side-menu a:hover {
+      color: #3b82f6;
+    }
+
+    /* Responsive navbar */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #3b82f6;
+        padding: 1rem 0;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .menu-icon {
+        display: flex;
+      }
+    }
+
+    /* QR Code Section */
     .container {
       text-align: center;
+      margin-top: 100px;
       width: 100%;
       max-width: 500px;
+      padding: 2rem;
     }
 
     input, button {
@@ -59,6 +160,30 @@
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>QR Generator</h1>
+    <div class="nav-links" id="navLinks">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <!-- Sidebar Menu -->
+  <div class="side-menu" id="sideMenu">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <!-- QR Code Generator Section -->
   <div class="container">
     <h2>QR Code Generator</h2>
     <input type="text" id="text" placeholder="Enter text or link" />
@@ -68,6 +193,14 @@
   </div>
 
   <script>
+    // Function to toggle the mobile menu
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const sideMenu = document.getElementById('sideMenu');
+      sideMenu.classList.toggle('show');
+    }
+
+    // Function to generate QR Code
     function generateQR() {
       const text = document.getElementById("text").value;
       const canvas = document.getElementById("qrcode");

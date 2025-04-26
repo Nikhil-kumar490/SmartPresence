@@ -6,92 +6,344 @@
   <title>Live QR Code Scanner</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: sans-serif;
-      background: #f9f9f9;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      color: #333;
       padding: 30px;
+      text-align: center;
     }
+
+    /* Navbar Styles */
+    .navbar {
+      width: 100%;
+      background-color: #3b82f6;
+      color: white;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .com_nav {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+    }
+
+    .l_nav h3 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .r_nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .r_nav button {
+      background-color: #3b82f6;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .r_nav button:hover {
+      background-color: #2563eb;
+      transform: scale(1.05);
+    }
+
+    .logout-btn {
+      background-color: #ef4444;
+    }
+
+    .logout-btn:hover {
+      background-color: #dc2626;
+    }
+
+    /* Hamburger Menu Icon */
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-icon div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+
+    /* Sidebar Menu */
+    .side-menu {
+      width: 250px;
+      background-color: #ffffff;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      padding-top: 60px;
+      box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      z-index: 150;
+    }
+
+    .side-menu button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      margin: 0;
+      text-align: left;
+      background-color: #f4f7fb;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .side-menu button:hover {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    #cut {
+      position: absolute;
+      top: 10px;
+      text-align: right;
+      font-size: 2rem;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: #333;
+    }
+
+    .side-menu.show {
+      left: 0;
+    }
+
+    @media (max-width: 768px) {
+      .r_nav {
+        display: none;
+      }
+
+      .menu-icon {
+        display: flex;
+      }
+    }
+
+    /* Scanner Section Styles */
+    .scanner-container {
+      margin-top: 100px;
+      background: #ffffff;
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 420px;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      animation: slideIn 1s ease;
+    }
+
+    .scanner-container h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #3b82f6;
+    }
+
     #reader {
-      width: 400px;
-      max-width: 90vw;
-      margin: auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1; /* Keep it square */
+  margin: 0 auto;
+  border: 2px dashed #3b82f6;
+  border-radius: 12px;
+  background-color: #f4f7fb;
+  overflow: hidden;
+}
+
     #result {
       margin-top: 20px;
       font-size: 18px;
-      color: green;
+      color: #22c55e;
+      font-weight: bold;
     }
+
     #errorLog {
       color: #999;
-      font-size: 12px;
+      font-size: 14px;
       margin-top: 10px;
     }
-    button {
-      margin: 10px;
-      padding: 10px 20px;
+
+    .stop-btn {
+      margin-top: 20px;
+      background-color: #ef4444;
+      border: none;
+      padding: 12px 25px;
       font-size: 16px;
+      color: white;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .stop-btn:hover {
+      background-color: #dc2626;
+      transform: scale(1.05);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
 <body>
 
+<div class="navbar" id="navbarContainer">
+  <div class="com_nav">
+    <div class="l_nav"><h3>Admin Portal</h3></div>
+    <div class="r_nav">
+      <button onclick="homepg()">Homepage</button>
+      <button onclick="scrollToSection('attendanceSection')">Mark Attendance</button>
+      <button onclick="scrollToSection('recordsSection')">View Records</button>
+      <button onclick="locat()">Registration</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+
+<div class="side-menu" id="sideMenu">
+  <button id="cut" onclick="closeMenu()">×</button>
+  <button onclick="homepg()">Homepage</button>
+  <button onclick="scrollToSection('attendanceSection')">Mark Attendance</button>
+  <button onclick="scrollToSection('recordsSection')">View Records</button>
+  <button onclick="locat()">Registration</button>
+  <button onclick="logout()" class="logout-btn">Logout</button>
+</div>
+
+<!-- Scanner Section -->
+<div class="scanner-container">
   <h2>🔍 Live QR Code Scanner</h2>
   <div id="reader"></div>
   <div id="result">Result: <span id="qr-result">None</span></div>
-  <div id="errorLog"></div>
-  <button onclick="stopScanner()">Stop</button>
+  <div id="errorLog">Initializing Scanner...</div>
+  <button class="stop-btn" onclick="stopScanner()">Stop Scanning</button>
+</div>
 
-  <script>
-    let scanner;
+<script>
+  let scanner;
+  const qrResult = document.getElementById("qr-result");
+  const errorLog = document.getElementById("errorLog");
 
-    const qrResult = document.getElementById("qr-result");
-    const errorLog = document.getElementById("errorLog");
+  function startScanner() {
+    const config = {
+      fps: 10,
+      qrbox: { width: 300, height: 300 },
+      rememberLastUsedCamera: true,
+      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+    };
 
-    function startScanner() {
-      const config = {
-        fps: 10,
-        qrbox: { width: 300, height: 300 },
-        rememberLastUsedCamera: true,
-        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
-      };
+    scanner = new Html5Qrcode("reader");
 
-      scanner = new Html5Qrcode("reader");
-
-      scanner.start(
-        { facingMode: "environment" },
-        config,
-        qrCodeMessage => {
-          qrResult.innerText = qrCodeMessage;
-          console.log("✅ QR Code Scanned:", qrCodeMessage);
-          // scanner.stop(); // Uncomment to stop after one scan
-        },
-        error => {
-          errorLog.innerText = `Looking...`;
-        }
-      ).catch(err => {
-        errorLog.innerText = "❌ Error: " + err;
-        console.error("Camera start error:", err);
+    scanner.start(
+      { facingMode: "environment" },
+      config,
+      qrCodeMessage => {
+        qrResult.innerText = qrCodeMessage;
+        console.log("✅ QR Code Scanned:", qrCodeMessage);
+        errorLog.innerText = "Scan complete!";
+        // scanner.stop(); // Uncomment if you want to stop after 1 scan
+      },
+      error => {
+        errorLog.innerText = `🔍 Scanning...`;
+      }
+    ).catch(err => {
+      errorLog.innerText = "❌ Error: " + err;
+      console.error("Camera start error:", err);
+    });
+  }
+  const config = {
+  fps: 10,
+  qrbox: function(viewfinderWidth, viewfinderHeight) {
+    const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
+    const boxSize = Math.floor(minEdge * 0.8);
+    return { width: boxSize, height: boxSize };
+  },
+  rememberLastUsedCamera: true,
+  supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA]
+};
+  function stopScanner() {
+    if (scanner) {
+      scanner.stop().then(() => {
+        console.log("🔴 Scanner stopped");
+        errorLog.innerText = "Scanner stopped.";
+      }).catch(err => {
+        console.error("Failed to stop:", err);
       });
     }
+  }
 
-    function stopScanner() {
-      if (scanner) {
-        scanner.stop().then(() => {
-          console.log("🔴 Scanner stopped");
-        }).catch(err => {
-          console.error("Failed to stop:", err);
-        });
-      }
+  window.addEventListener("load", startScanner);
+
+  function toggleMenu() {
+    document.getElementById('sideMenu').classList.toggle('show');
+  }
+
+  function closeMenu() {
+    document.getElementById('sideMenu').classList.remove('show');
+  }
+
+  function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
     }
+  }
 
-    // Auto-start when page loads
-    window.addEventListener("load", startScanner);
-  </script>
+  function locat() {
+    window.location.href = "registration_form.html";
+  }
+
+  function homepg() {
+    window.location.href = "home.html";
+  }
+
+  function logout() {
+    alert("Logging out...");
+    window.location.href = "login.html";
+  }
+</script>
 
 </body>
 </html>

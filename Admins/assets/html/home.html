@@ -4,38 +4,211 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Attendance Portal</title>
-   <link rel="stylesheet" href="../css/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      color: #333;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      width: 100%;
+      background-color: #3b82f6;
+      color: white;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .com_nav {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+    }
+
+    .l_nav h3 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .r_nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .r_nav button {
+      background-color: #3b82f6;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .r_nav button:hover {
+      background-color: #2563eb;
+      transform: scale(1.05);
+    }
+
+    .logout-btn {
+      background-color: #ef4444;
+    }
+
+    .logout-btn:hover {
+      background-color: #dc2626;
+    }
+
+    /* Hamburger Menu Icon */
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-icon div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+
+    /* Sidebar Menu */
+    .side-menu {
+      width: 250px;
+      background-color: #ffffff;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      padding-top: 60px;
+      box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.1);
+      transition: left 0.3s ease;
+      z-index: 150;
+    }
+
+    .side-menu button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      text-align: left;
+      background-color: #f4f7fb;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .side-menu button:hover {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    #cut {
+      position: absolute;
+      top: 10px;
+      text-align: right;
+      font-size: 2rem;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      color: #333;
+    }
+
+    /* Sidebar show class */
+    .side-menu.show {
+      left: 0;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .r_nav {
+        display: none;
+      }
+
+      .menu-icon {
+        display: flex;
+      }
+    }
+
+  </style>
 </head>
 <body>
-   
-    <div class="navbar hidden" id="navbarContainer">
-        <div class="com_nav">
+
+<div class="navbar" id="navbarContainer">
+  <div class="com_nav">
     <div class="l_nav"><h3>Admin Portal</h3></div>
     <div class="r_nav">
-        <button>Mark Attendence</button>
-        <button>View Records</button>
-        <button>Scanner</button>
-        <button onclick="locat()">Registration</button>
-        <button class="logout-btn" onclick="logout()" >Logout</button>
+      <button onclick="scrollToSection('attendanceSection')">Mark Attendance</button>
+      <button onclick="scrollToSection('recordsSection')">View Records</button>
+      <button onclick="scannerpg()">Scanner</button>
+      <button onclick="locat()">Registration</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   </div>
-  <div class="menu-icon" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
 </div>
-
 
 <div class="side-menu" id="sideMenu">
-  <div id="cut" onclick="closeMenu()">×</div>
+  <button id="cut" onclick="closeMenu()">×</button>
   <button onclick="scrollToSection('attendanceSection')">Mark Attendance</button>
   <button onclick="scrollToSection('recordsSection')">View Records</button>
-  <button onclick="scrollToSection('Scanner')">Scanner</button>
+  <button onclick="scannerpg()">Scanner</button>
   <button onclick="locat()">Registration</button>
-  <button onclick="logout()" class="logout-btn" >Logout</button>
+  <button onclick="logout()" class="logout-btn">Logout</button>
 </div>
 
-<script src="../js/script.js"></script>
+<script>
+  function toggleMenu() {
+    const sideMenu = document.getElementById('sideMenu');
+    sideMenu.classList.toggle('show');
+  }
+
+  function closeMenu() {
+    const sideMenu = document.getElementById('sideMenu');
+    sideMenu.classList.remove('show');
+  }
+
+  function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function locat() {
+    window.location.href = "registration_form.html"; // adjust link accordingly
+  }
+  function scannerpg() {
+      window.location.href = "scanner.html";
+    }
+
+  function logout() {
+    alert("Logging out...");
+    window.location.href = "login.html"; // adjust link accordingly
+  }
+</script>
+
 </body>
 </html>
